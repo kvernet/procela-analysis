@@ -1,0 +1,56 @@
+# Procela Analysis Authors
+
+Project Lead
+============
+Kinson Vernet <kinson.vernet@gmail.com> (0009-0009-7535-3357)
+  - Project architecture
+  - Analysis core engine
+  - Memory reader, frames and metrics
+  - Mechanism profiler and ecology
+  - Policy stability
+  - Regime detector and transitions
+  - Report audit
+  - Visualization
+
+
+Core Contributors
+=================
+[Core team formation in progress]
+
+
+Domain Experts
+==============
+[Domain specializations to be established]
+
+
+Advisors
+========
+[Academic/industry advisory board pending]
+
+
+Emeritus Contributors
+=====================
+[No former contributors yet]
+
+
+Acknowledgments
+===============
+[Formal acknowledgments to be added]
+
+
+---
+NOTES:
+- This structure reflects Procela's architectural core and rigor
+- Empty sections denote intentional design, not oversight
+- Contributors will be added as the project evolves
+- Contact: To be established
+
+# Last updated: 2026-05-24
+# Version: 0.1.0 (core foundation)
+
+
+---
+# Contact Protocol
+# For technical issues: GitHub Issues
+# For research collaboration: Email lead maintainer
+# For security concerns: See SECURITY.md

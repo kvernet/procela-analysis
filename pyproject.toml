@@ -1,0 +1,125 @@
+[build-system]
+requires = ["setuptools>=77.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "procela_analysis"
+version = "0.1.0"
+description = "Procela analysis tools"
+authors = [
+    { name = "Kinson Vernet", email = "kinson.vernet@gmail.com" }
+]
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
+
+dependencies = [
+    "procela>=1.0.0",
+]
+
+[project.urls]
+Homepage = "https://analysis.procela.org"
+Documentation = "https://docs.procela.org/analysis/"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4",
+    "pytest-cov>=4.1",
+    "pre-commit>=3.6",
+    "black==24.1.0",
+    "ruff==0.4.4",
+    "isort==7.0.0",
+    "mypy==1.8.0",
+    "pydocstyle>=6.3",
+]
+docs = [
+    "mkdocs>=1.5,<2.0",
+    "mkdocs-material>=9.5.0",
+    "mkdocstrings[python]>=0.24.0",
+    "mkdocs-autorefs>=1.0.0",
+    "mkdocs-jupyter>=0.24.0",
+    "mkdocs-git-revision-date-localized-plugin>=1.2.0",
+    "mkdocs-mermaid2-plugin>=1.0.0",
+]
+notebooks = []
+
+[tool.setuptools.packages.find]
+include = ["procela_analysis*"]
+exclude = ["tests*"]
+
+[tool.pydocstyle]
+convention = "numpy"
+match = '(?P<module>[a-zA-Z0-9_]+\.(?P<child>[a-zA-Z0-9_]+\.)*[a-zA-Z0-9_]+)\.py'
+match-dir = '(?P<module>[a-zA-Z0-9_]+\.(?P<child>[a-zA-Z0-9_]+\.)*[a-zA-Z0-9_]+)'
+
+[tool.black]
+line-length = 88
+target-version = ["py310"]
+
+[tool.isort]
+profile = "black"
+line_length = 88
+combine_as_imports = true
+
+[tool.ruff]
+line-length = 88
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+ignore = []
+fixable = ["ALL"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+no_implicit_optional = true
+strict_equality = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "--strict-markers",
+    "--strict-config",
+    "-v",
+    "--durations=10",
+    "--cov=procela_analysis",
+    "--cov-report=term-missing",
+    "--cov-report=html",
+    "--cov-report=xml",
+]
+markers = []
+
+[tool.coverage.run]
+source = ["procela_analysis"]
+omit = [
+    "procela_analysis/**/__pycache__/*",
+    "tests/*",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if settings.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:",
+    "class .*\\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
+]

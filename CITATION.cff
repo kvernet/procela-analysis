@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+message: "If you use Procela analysis in your research, please cite the following work."
+title: "Procela analysis: An analysis tools for Procela"
+authors:
+  - family-names: "Vernet"
+    given-names: "Kinson"
+    orcid: "https://orcid.org/0009-0009-7535-3357"
+repository-code: "https://github.com/kvernet/procela-analysis"
+url: "https://analysis.procela.org"
+abstract: "Procela analysis is a Python framework tools build on top of Procela for analysis facilities."
+keywords:
+  - epistemic governance
+  - mechanistic simulation
+  - competing ontologies
+  - antimicrobial resistance
+  - auditability
+  - analysis
+license: "Apache-2.0"
+version: "0.1.0"
+date-released: ""
+preferred-citation:
+  type: article
+  authors:
+    - family-names: "Vernet"
+      given-names: "Kinson"
+  title: "Procela analysis: An analysis tools for Procela"
+  year: 2026
+  journal: ""
+  url: "https://analysis.procela.org/paper"

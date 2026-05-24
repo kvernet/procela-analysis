@@ -1,0 +1,96 @@
+# -------------------------------------------------------
+# Git Attributes
+# Ensures consistent line endings, text handling, and diffs
+# -------------------------------------------------------
+
+# Default: treat all text files as UTF-8 with LF endings
+* text=auto eol=lf
+
+# Python & Configuration files
+*.py      text eol=lf linguist-language=Python
+*.toml    text eol=lf
+*.yaml    text eol=lf
+*.yml     text eol=lf
+*.json    text eol=lf
+*.ini     text eol=lf
+*.cfg     text eol=lf
+*.txt     text eol=lf
+*.md      text eol=lf linguist-language=Markdown
+
+# Shell scripts
+*.sh text eol=lf linguist-language=Shell
+
+# Makefiles and Taskfiles
+Makefile  text eol=lf
+Taskfile.yaml text eol=lf
+
+# CI/CD workflows (GitHub Actions)
+.github/**/*.yml  text eol=lf
+.github/**/*.yaml text eol=lf
+
+# Docker-related files
+Dockerfile        text eol=lf linguist-language=Dockerfile
+*.dockerignore    text eol=lf
+docker-compose*.yaml text eol=lf
+
+# Jupyter Notebooks (JSON format)
+*.ipynb text eol=lf linguist-language=Jupyter\ Notebook
+
+# Data and model artifacts — treat as binary
+*.pkl    binary
+*.pickle binary
+*.joblib binary
+*.npy    binary
+*.npz    binary
+*.pt     binary
+*.pth    binary
+*.onnx   binary
+*.h5     binary
+*.hdf5   binary
+*.feather binary
+*.parquet binary
+
+# Images and assets
+*.png    binary
+*.jpg    binary
+*.jpeg   binary
+*.gif    binary
+*.ico    binary
+*.svg    binary
+*.pdf    binary
+
+# Archives and binaries
+*.zip    binary
+*.tar    binary
+*.gz     binary
+*.bz2    binary
+*.xz     binary
+*.7z     binary
+*.exe    binary
+*.bin    binary
+
+# Documentation/build
+*.html   text eol=lf
+*.css    text eol=lf
+*.js     text eol=lf
+*.whl    binary
+*.tar.gz binary
+*.egg    binary
+
+# Ignore diffs for lock/data files
+*.lock   -diff
+*.db     -diff
+
+# Procela-analysis-specific
+.procela*_cache/** binary
+outputs/**        -diff
+
+# Windows batch files
+*.bat    text eol=crlf
+*.cmd    text eol=crlf
+*.ps1    text eol=crlf
+
+# Prevent Git from changing CRLF in virtual environments or cache
+.venv/**    -text
+__pycache__/** -text
+.env/**     -text
