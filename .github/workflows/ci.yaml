@@ -33,7 +33,8 @@ jobs:
       - name: Install dependencies
         run: |
           pip install --root-user-action=ignore --upgrade pip
-          pip install --root-user-action=ignore -e .[dev]
+          pip install --root-user-action=ignore git+https://github.com/kvernet/procela.git@v1.0.2
+          pip install --root-user-action=ignore -v -e .[dev]
 
       - name: Run pre-commit
         run: pre-commit run --all-files --show-diff-on-failure
