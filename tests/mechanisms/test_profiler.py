@@ -155,20 +155,20 @@ class TestDominance:
 
 
 # ---------------------------------------------------------------------------
-# accuracy tests
+# rolling_mae tests
 # ---------------------------------------------------------------------------
 
 
-class TestAccuracy:
-    """Tests for MechanismProfiler.accuracy()."""
+class TestRollingMAE:
+    """Tests for MechanismProfiler.rolling_mae()."""
 
     def test_returns_correct_columns(self, profiler):
-        df = profiler.accuracy("X")
+        df = profiler.rolling_mae("X")
         assert list(df.columns) == ["step", "mechanism", "rolling_mae"]
 
     def test_rolling_mae_with_window_1(self, profiler):
         """Window=1: rolling_mae equals absolute_error."""
-        df = profiler.accuracy("X", window=1)
+        df = profiler.rolling_mae("X", window=1)
         for _, row in df.iterrows():
             original = profiler._errors[
                 (profiler._errors["step"] == row["step"])
@@ -178,19 +178,19 @@ class TestAccuracy:
 
     def test_rolling_mae_decays_for_improving_mechanism(self, profiler):
         """m1 errors: 5.0, 4.0, 3.0 → rolling MAE should decrease."""
-        df = profiler.accuracy("X", window=3)
+        df = profiler.rolling_mae("X", window=3)
         m1 = df[df["mechanism"] == "m1"]
         # Step 2 with window=3: mean of 5.0, 4.0, 3.0 = 4.0
         assert m1[m1["step"] == 2]["rolling_mae"].iloc[0] == pytest.approx(4.0)
 
     def test_default_window_is_10(self, profiler):
-        df = profiler.accuracy("X")
+        df = profiler.rolling_mae("X")
         # With only 3 steps and window=10, min_periods=1 means all steps have values
         assert len(df) == 6
 
     def test_raises_on_missing_variable(self, profiler):
         with pytest.raises(ValueError, match="No errors found"):
-            profiler.accuracy("nonexistent")
+            profiler.rolling_mae("nonexistent")
 
 
 # ---------------------------------------------------------------------------

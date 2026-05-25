@@ -76,7 +76,7 @@ class MechanismProfiler:
         result = result.reset_index(drop=True)
         return result
 
-    def accuracy(
+    def rolling_mae(
         self,
         variable: str,
         window: int = 10,

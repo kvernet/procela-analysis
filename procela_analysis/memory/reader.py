@@ -89,7 +89,7 @@ class MemoryReader:
 
     def errors(self) -> pd.DataFrame:
         """
-        Compute per-hypothesis prediction errors.
+        Compute per-hypothesis proposition errors.
 
         Joins hypotheses with their corresponding resolutions
         and computes absolute and squared error for each hypothesis.
@@ -153,6 +153,9 @@ class MemoryReader:
                         "step": step,
                         "variable": self._variable.name,
                         "resolved": float(conclusion.value),
+                        "confidence": (
+                            conclusion.confidence if conclusion.confidence else 0.0
+                        ),
                         "policy": self._get_source_name(conclusion.source),
                         "num_hypotheses": len(hypotheses),
                     }

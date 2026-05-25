@@ -27,6 +27,7 @@ RESOLUTIONS_SCHEMA: dict[str, str] = {
     "step": "int64",
     "variable": "str",
     "resolved": "float64",
+    "confidence": "float64",
     "policy": "str",
     "num_hypotheses": "int64",
 }
