@@ -21,7 +21,6 @@ HYPOTHESES_SCHEMA: dict[str, str] = {
     "mechanism": "str",
     "proposed": "float64",
     "confidence": "float64",
-    "source_key": "str",
 }
 
 RESOLUTIONS_SCHEMA: dict[str, str] = {

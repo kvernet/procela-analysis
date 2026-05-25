@@ -30,7 +30,6 @@ def valid_hypotheses_records():
             "mechanism": "contact",
             "proposed": 10.5,
             "confidence": 0.8,
-            "source_key": "abc123",
         },
         {
             "step": 0,
@@ -38,7 +37,6 @@ def valid_hypotheses_records():
             "mechanism": "environmental",
             "proposed": 12.0,
             "confidence": 0.6,
-            "source_key": "def456",
         },
         {
             "step": 1,
@@ -46,7 +44,6 @@ def valid_hypotheses_records():
             "mechanism": "contact",
             "proposed": 11.0,
             "confidence": 0.9,
-            "source_key": "abc123",
         },
     ]
 
@@ -96,7 +93,6 @@ class TestSchemas:
             "mechanism",
             "proposed",
             "confidence",
-            "source_key",
         }
 
     def test_resolutions_schema_columns(self):
@@ -153,7 +149,6 @@ class TestHypothesesFrame:
         df = hypotheses_frame(valid_hypotheses_records)
         assert pd.api.types.is_string_dtype(df["variable"])
         assert pd.api.types.is_string_dtype(df["mechanism"])
-        assert pd.api.types.is_string_dtype(df["source_key"])
 
 
 # ---------------------------------------------------------------------------
@@ -248,7 +243,6 @@ class TestErrorsFrame:
                     "mechanism": "m1",
                     "proposed": 5.0,
                     "confidence": 0.8,
-                    "source_key": "k1",
                 },
                 {
                     "step": 0,
@@ -256,7 +250,6 @@ class TestErrorsFrame:
                     "mechanism": "m2",
                     "proposed": 20.0,
                     "confidence": 0.7,
-                    "source_key": "k2",
                 },
             ]
         )
@@ -307,11 +300,6 @@ class TestValidateHypotheses:
         empty = pd.DataFrame(columns=list(HYPOTHESES_SCHEMA.keys()))
         with pytest.raises(ValueError, match="empty hypotheses frame"):
             validate_hypotheses(empty)
-
-    def test_raises_on_missing_column(self, hypotheses_df):
-        bad = hypotheses_df.drop(columns=["source_key"])
-        with pytest.raises(ValueError, match="missing required columns"):
-            validate_hypotheses(bad)
 
     def test_raises_on_wrong_dtype(self, hypotheses_df):
         bad = hypotheses_df.copy()
@@ -381,7 +369,6 @@ class TestDtypeCompatible:
                     "mechanism": "m1",
                     "proposed": 1.0,
                     "confidence": 0.5,
-                    "source_key": "k1",
                 }
             ]
         )
@@ -398,7 +385,6 @@ class TestDtypeCompatible:
                     "mechanism": "m1",
                     "proposed": 1.0,
                     "confidence": 0.5,
-                    "source_key": "k1",
                 }
             ]
         )
@@ -415,7 +401,6 @@ class TestDtypeCompatible:
                     "mechanism": "m1",
                     "proposed": 1.0,
                     "confidence": 0.5,
-                    "source_key": "k1",
                 }
             ]
         )
@@ -432,7 +417,6 @@ class TestDtypeCompatible:
                     "mechanism": "m1",
                     "proposed": 1.0,
                     "confidence": 0.5,
-                    "source_key": "k1",
                 }
             ]
         )

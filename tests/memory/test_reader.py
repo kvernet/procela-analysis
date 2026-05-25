@@ -229,15 +229,6 @@ class TestHypotheses:
         df = reader.hypotheses()
         assert (df["variable"] == "X").all()
 
-    def test_source_key_is_hex_string(self, populated_variable):
-        reader = MemoryReader(populated_variable)
-        df = reader.hypotheses()
-        # Find a row that isn't the init row (init source may be None)
-        non_init = df[df["mechanism"] == "test_mechanism"]
-        key_str = non_init.iloc[0]["source_key"]
-        assert isinstance(key_str, str)
-        assert len(key_str) > 0
-
     def test_proposed_values_present(self, populated_variable):
         reader = MemoryReader(populated_variable)
         df = reader.hypotheses()
@@ -460,15 +451,9 @@ class TestUnknownSource:
 
         reader = MemoryReader(variable)
         df = reader.hypotheses()
-        # Find the hypothesis with the unknown key
-        unknown_rows = df[df["source_key"] == unknown_key.to_bytes().hex()]
-        assert len(unknown_rows) == 1
+        unknown_rows = df[df["mechanism"] == "unknown"]
+        assert len(unknown_rows) == 2
         assert unknown_rows.iloc[0]["mechanism"] == "unknown"
-
-    def test_null_source_key_returns_unknown(self):
-        """_key_to_string should return 'unknown' for None key."""
-        result = MemoryReader._key_to_string(None)
-        assert result == "unknown"
 
     def test_null_key_returns_unknown_source_name(self, empty_variable):
         """_get_source_name should return 'unknown' for None key."""

@@ -143,7 +143,6 @@ class MemoryReader:
                             if hyp.record.confidence is not None
                             else 0.0
                         ),
-                        "source_key": self._key_to_string(hyp.record.source),
                     }
                 )
 
@@ -205,25 +204,5 @@ class MemoryReader:
         source = KeyAuthority.resolve(key)
         if isinstance(source, Mechanism) or isinstance(source, ResolutionPolicy):
             return str(source.name)
-
-        return "unknown"
-
-    @staticmethod
-    def _key_to_string(key: Key | None) -> str:
-        """
-        Convert a Procela cryptographic key to a string representation.
-
-        Parameters
-        ----------
-        key : Key
-            A Procela cryptographic key.
-
-        Returns
-        -------
-        str
-            Hexadecimal string representation of the key bytes.
-        """
-        if key is not None:
-            return str(key.to_bytes().hex())
 
         return "unknown"
