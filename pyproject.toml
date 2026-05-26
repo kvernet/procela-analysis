@@ -19,6 +19,7 @@ dependencies = [
     "numpy>=1.26.0",
     "pandas>=2.1.0",
     "matplotlib>=3.8.0",
+    "plotly>=5.18.0",
 ]
 
 [project.urls]
@@ -93,6 +94,8 @@ strict_equality = true
 module = [
     "procela",
     "pandas",
+    "matplotlib",
+    "plotly.*",
 ]
 ignore_missing_imports = true
 
@@ -118,6 +121,7 @@ source = ["procela_analysis"]
 omit = [
     "procela_analysis/**/__pycache__/*",
     "tests/*",
+    "procela_analysis/reports/*",
     "procela_analysis/viz/*",
 ]
 
