@@ -20,15 +20,15 @@ import plotly.graph_objects as go
 import plotly.io as pio
 from plotly.subplots import make_subplots
 
-from procela_analysis.mechanisms.ecology import MechanismEcology
-from procela_analysis.mechanisms.profiler import MechanismProfiler
-from procela_analysis.memory.metrics import (
+from ..mechanisms.ecology import MechanismEcology
+from ..mechanisms.profiler import MechanismProfiler
+from ..memory.metrics import (
     confidence_spread,
     disagreement_index,
     fragility,
     rolling_error,
 )
-from procela_analysis.regimes.detector import RegimeDetector
+from ..regimes.detector import RegimeDetector
 
 
 class AuditReport:
@@ -63,6 +63,7 @@ class AuditReport:
         governance_log: pd.DataFrame | None = None,
         title: str = "Procela Simulation Audit",
     ) -> None:
+        """Self-contained HTML audit report for Procela simulations."""
         self._hypotheses = hypotheses
         self._resolutions = resolutions
         self._errors = errors

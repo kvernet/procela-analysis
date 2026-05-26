@@ -39,6 +39,7 @@ class MemoryReader:
         variable: Variable,
         time_points: dict[int, TimePoint] | None = None,
     ) -> None:
+        """Memory reader for Procela variables."""
         self._variable = variable
         self._time_points = (
             {t: i for i, t in time_points.items()} if time_points else None

@@ -311,7 +311,9 @@ def _dtype_compatible(actual: np.dtype, expected: str) -> bool:
     expected_normalized = expected.lower()
 
     if expected_normalized == "str":
-        return actual is object or pd.api.types.is_string_dtype(actual)
+        return bool(pd.api.types.is_string_dtype(actual)) or actual == np.dtype(
+            "object"
+        )
 
     return str(actual) == expected_normalized
 

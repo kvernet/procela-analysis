@@ -32,6 +32,7 @@ class MechanismProfiler:
         hypotheses: pd.DataFrame,
         errors: pd.DataFrame,
     ) -> None:
+        """Mechanism profiler for per-mechanism performance analysis."""
         self._hypotheses = hypotheses
         self._errors = errors
 

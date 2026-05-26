@@ -37,6 +37,7 @@ class RegimeDetector:
     """
 
     def __init__(self, errors: pd.DataFrame) -> None:
+        """Unsupervised regime detection from mechanism error patterns."""
         self._errors = errors
         self._results: dict[str, dict] = {}
 

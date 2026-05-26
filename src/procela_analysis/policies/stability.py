@@ -38,6 +38,7 @@ class PolicyStability:
         resolutions: pd.DataFrame,
         hypotheses: pd.DataFrame,
     ) -> None:
+        """Policy stability analysis from resolution history."""
         self._resolutions = resolutions
         self._hypotheses = hypotheses
 

@@ -3,19 +3,18 @@ requires = ["setuptools>=77.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "procela_analysis"
+name = "procela-analysis"
 version = "0.1.0"
-description = "Procela analysis tools"
+description = "Procela analysis tools for epistemic simulation audit"
 authors = [
     { name = "Kinson Vernet", email = "kinson.vernet@gmail.com" }
 ]
 readme = "README.md"
 license = "Apache-2.0"
-license-files = ["LICENSE"]
 requires-python = ">=3.10"
 
 dependencies = [
-    "procela @ git+https://github.com/kvernet/procela.git@v1.0.2",
+    "procela==1.0.2",
     "numpy>=1.26.0",
     "pandas>=2.1.0",
     "matplotlib>=3.8.0",
@@ -34,8 +33,8 @@ dev = [
     "black==24.1.0",
     "ruff==0.4.4",
     "isort==7.0.0",
-    "mypy==1.8.0",
-    "pydocstyle>=6.3",
+    "mypy>=1.10",
+    "pydocstyle>=6.3.0",
 ]
 docs = [
     "mkdocs>=1.5,<2.0",
@@ -46,16 +45,13 @@ docs = [
     "mkdocs-git-revision-date-localized-plugin>=1.2.0",
     "mkdocs-mermaid2-plugin>=1.0.0",
 ]
-notebooks = []
+
+[tool.setuptools]
+package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
+where = ["src"]
 include = ["procela_analysis*"]
-exclude = ["tests*"]
-
-[tool.pydocstyle]
-convention = "numpy"
-match = '(?P<module>[a-zA-Z0-9_]+\.(?P<child>[a-zA-Z0-9_]+\.)*[a-zA-Z0-9_]+)\.py'
-match-dir = '(?P<module>[a-zA-Z0-9_]+\.(?P<child>[a-zA-Z0-9_]+\.)*[a-zA-Z0-9_]+)'
 
 [tool.black]
 line-length = 88
@@ -64,7 +60,7 @@ target-version = ["py310"]
 [tool.isort]
 profile = "black"
 line_length = 88
-combine_as_imports = true
+known_first_party = ["procela_analysis"]
 
 [tool.ruff]
 line-length = 88
@@ -72,14 +68,15 @@ target-version = "py310"
 
 [tool.ruff.lint]
 select = ["E", "F", "I"]
-ignore = []
-fixable = ["ALL"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["procela_analysis"]
 
 [tool.ruff.format]
 quote-style = "double"
 
 [tool.mypy]
-python_version = "3.10"
+python_version = "3.12"
 warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = true
@@ -89,14 +86,6 @@ warn_redundant_casts = true
 warn_unused_ignores = true
 no_implicit_optional = true
 strict_equality = true
-
-[[tool.mypy.overrides]]
-module = [
-    "procela",
-    "pandas",
-    "matplotlib",
-    "plotly.*",
-]
 ignore_missing_imports = true
 
 [tool.pytest.ini_options]
@@ -114,15 +103,14 @@ addopts = [
     "--cov-report=html",
     "--cov-report=xml",
 ]
-markers = []
 
 [tool.coverage.run]
 source = ["procela_analysis"]
 omit = [
-    "procela_analysis/**/__pycache__/*",
     "tests/*",
-    "procela_analysis/reports/*",
-    "procela_analysis/viz/*",
+    "src/procela_analysis/**/__pycache__/*",
+    "src/procela_analysis/reports/*",
+    "src/procela_analysis/viz/*",
 ]
 
 [tool.coverage.report]

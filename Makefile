@@ -50,11 +50,11 @@ requirements:  ## Generate requirements files from pyproject.toml
 # --------------------------------------------------------------------
 
 lint:  ## Run linters (no code modification)
-	ruff check procela_analysis tests
-	pydocstyle procela_analysis
+	ruff check src tests
+	pydocstyle src
 
 type-check:  ## Run static type checking
-	mypy procela_analysis
+	mypy src
 
 test:  ## Run tests
 	pytest
@@ -64,11 +64,11 @@ test:  ## Run tests
 # --------------------------------------------------------------------
 
 format: isort  ## Format code
-	black procela_analysis tests
-	ruff check --fix procela_analysis tests
+	black src tests
+	ruff check --fix src tests
 
 isort:  ## Sort imports
-	isort procela_analysis tests
+	isort src tests
 
 # --------------------------------------------------------------------
 # Tooling

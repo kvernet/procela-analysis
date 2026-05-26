@@ -34,6 +34,7 @@ class MechanismEcology:
         hypotheses: pd.DataFrame,
         errors: pd.DataFrame,
     ) -> None:
+        """Mechanism ecology for population-level analysis of competing theories."""
         self._hypotheses = hypotheses
         self._errors = errors
 

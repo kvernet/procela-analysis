@@ -33,6 +33,7 @@ class TransitionAnalyzer:
         hypotheses: pd.DataFrame,
         errors: pd.DataFrame,
     ) -> None:
+        """Regime transition analysis for detected regime boundaries."""
         self._hypotheses = hypotheses
         self._errors = errors
 
@@ -352,7 +353,7 @@ class TransitionAnalyzer:
                 )
                 continue
 
-            idx = transition_idx[0]
+            idx = int(transition_idx[0])
 
             # Transition distance: delta at the boundary
             trans_dist = deltas[idx - 1]
