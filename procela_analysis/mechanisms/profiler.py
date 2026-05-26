@@ -1,14 +1,16 @@
 """
 Mechanism profiler for per-mechanism performance analysis.
 
-Computes accuracy curves, dominance timelines, influence windows,
-redundancy matrices, and falsifiability scores from hypothesis
-and error DataFrames produced by MemoryReader.
+Computes accuracy curves, influence windows, redundancy matrices,
+and falsifiability scores from hypothesis and error DataFrames
+produced by MemoryReader.
 """
 
 from __future__ import annotations
 
 import pandas as pd
+
+from .ecology import MechanismEcology
 
 
 class MechanismProfiler:
@@ -36,45 +38,6 @@ class MechanismProfiler:
     # ------------------------------------------------------------------
     # Public API
     # ------------------------------------------------------------------
-
-    def dominance(self, variable: str) -> pd.DataFrame:
-        """
-        Compute confidence share over time for each mechanism.
-
-        At each step, confidence share is a mechanism's confidence
-        divided by the sum of all confidences for that variable.
-
-        Parameters
-        ----------
-        variable : str
-            Variable name to filter on.
-
-        Returns
-        -------
-        pd.DataFrame
-            Columns: ``step``, ``mechanism``, ``confidence_share``.
-            One row per mechanism per step. Sorted by step, then
-            by confidence share descending.
-        """
-        hyp = self._hypotheses[self._hypotheses["variable"] == variable].copy()
-
-        if hyp.empty:
-            raise ValueError(f"No hypotheses found for variable '{variable}'.")
-
-        # Sum of confidences per step
-        step_totals = hyp.groupby("step")["confidence"].sum()
-
-        # Join and compute share
-        hyp["confidence_share"] = hyp.apply(
-            lambda row: row["confidence"] / step_totals[row["step"]], axis=1
-        )
-
-        result = hyp[["step", "mechanism", "confidence_share"]].copy()
-        result = result.sort_values(
-            ["step", "confidence_share"], ascending=[True, False]
-        )
-        result = result.reset_index(drop=True)
-        return result
 
     def rolling_mae(
         self,
@@ -133,7 +96,9 @@ class MechanismProfiler:
         pd.DataFrame
             Columns: ``step``, ``mechanism``, ``is_influential``.
         """
-        dom = self.dominance(variable)
+        dom = MechanismEcology(self._hypotheses, self._errors).dominance_curve(
+            variable=variable
+        )
         dom["is_influential"] = dom["confidence_share"] >= threshold
         return dom[["step", "mechanism", "is_influential"]]
 

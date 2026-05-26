@@ -90,71 +90,6 @@ def single_mechanism_errors():
 
 
 # ---------------------------------------------------------------------------
-# dominance tests
-# ---------------------------------------------------------------------------
-
-
-class TestDominance:
-    """Tests for MechanismProfiler.dominance()."""
-
-    def test_returns_correct_columns(self, profiler):
-        df = profiler.dominance("X")
-        assert list(df.columns) == ["step", "mechanism", "confidence_share"]
-
-    def test_confidence_shares_sum_to_one_per_step(self, profiler):
-        df = profiler.dominance("X")
-        step_sums = df.groupby("step")["confidence_share"].sum()
-        for s in step_sums:
-            assert s == pytest.approx(1.0)
-
-    def test_high_confidence_gets_high_share(self, profiler):
-        df = profiler.dominance("X")
-        step0 = df[df["step"] == 0]
-        m1_share = step0[step0["mechanism"] == "m1"]["confidence_share"].iloc[0]
-        m2_share = step0[step0["mechanism"] == "m2"]["confidence_share"].iloc[0]
-        # m1 confidence 0.8, m2 0.2 → shares 0.8 and 0.2
-        assert m1_share == pytest.approx(0.8)
-        assert m2_share == pytest.approx(0.2)
-
-    def test_sorted_by_step_then_share_descending(self, profiler):
-        df = profiler.dominance("X")
-        for step in df["step"].unique():
-            step_df = df[df["step"] == step]
-            shares = step_df["confidence_share"].values
-            assert all(shares[i] >= shares[i + 1] for i in range(len(shares) - 1))
-
-    def test_filters_by_variable(self, multi_variable_hypotheses, simple_errors):
-        prof = MechanismProfiler(multi_variable_hypotheses, simple_errors)
-        df_x = prof.dominance("X")
-        assert (df_x["mechanism"].isin(["m1", "m2"])).all()
-        # Should not contain Y data
-        df_y = prof.dominance("Y")
-        assert len(df_y) > 0
-
-    def test_raises_on_missing_variable(self, profiler):
-        with pytest.raises(ValueError, match="No hypotheses found"):
-            profiler.dominance("nonexistent")
-
-    def test_raises_on_empty_hypotheses(self):
-        empty_hyp = pd.DataFrame(
-            columns=[
-                "step",
-                "variable",
-                "mechanism",
-                "proposed",
-                "confidence",
-                "source_key",
-            ]
-        )
-        empty_err = pd.DataFrame(
-            columns=["step", "variable", "mechanism", "absolute_error", "squared_error"]
-        )
-        prof = MechanismProfiler(empty_hyp, empty_err)
-        with pytest.raises(ValueError, match="No hypotheses found"):
-            prof.dominance("X")
-
-
-# ---------------------------------------------------------------------------
 # rolling_mae tests
 # ---------------------------------------------------------------------------
 
@@ -411,21 +346,3 @@ class TestFalsifiability:
         df = prof.falsifiability("X")
         assert len(df) == 1
         assert df.iloc[0]["mechanism"] == "m1"
-
-
-# ---------------------------------------------------------------------------
-# Multi-variable tests
-# ---------------------------------------------------------------------------
-
-
-class TestMultiVariable:
-    """Tests that filtering by variable works correctly."""
-
-    def test_dominance_filters_variables(
-        self, multi_variable_hypotheses, simple_errors
-    ):
-        prof = MechanismProfiler(multi_variable_hypotheses, simple_errors)
-        df = prof.dominance("X")
-        # All steps in result should have exactly 2 mechanisms (m1, m2 for X)
-        step_counts = df.groupby("step").size()
-        assert (step_counts == 2).all()
