@@ -118,6 +118,7 @@ source = ["procela_analysis"]
 omit = [
     "procela_analysis/**/__pycache__/*",
     "tests/*",
+    "procela_analysis/viz/*",
 ]
 
 [tool.coverage.report]
