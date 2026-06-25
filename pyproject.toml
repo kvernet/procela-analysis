@@ -105,7 +105,7 @@ addopts = [
 ]
 
 [tool.coverage.run]
-source = ["procela_analysis"]
+source = ["src"]
 omit = [
     "tests/*",
     "src/procela_analysis/**/__pycache__/*",

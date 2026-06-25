@@ -43,12 +43,6 @@ governance interventions succeed.
 pip install procela-analysis
 ```
 
-Procela must be installed separately:
-
-```bash
-pip install procela
-```
-
 ## Quick Start
 
 ```python
@@ -86,6 +80,22 @@ make dev-install
 make pre-commit
 ```
 
+# Citation
+
+If you use Procela Analysis in your research, please cite:
+
+```bibtex
+@software{procela_2026,
+    title={Procela: Epistemic Governance in Mechanistic Simulations Under Structural Uncertainty},
+    author={Kinson Vernet},
+    year={2026},
+    eprint={2604.00675},
+    archivePrefix={arXiv},
+    primaryClass={physics.comp-ph},
+    url={https://arxiv.org/abs/2604.00675},
+}
+```
+
 ## License
 
-Apache 2.0 — see [LICENSE](LICENSE).
+Apache 2.0 — see [LICENSE](https://github.com/kvernet/procela-analysis).
